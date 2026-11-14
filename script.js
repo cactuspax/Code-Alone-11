@@ -71,6 +71,7 @@ const chatData = {
 //**************************
 
 function initalizeEventListeners() {
+  // add listeners to every channel so when clicked it can capture the event and use it later
   document.querySelectorAll(".channel").forEach((button) => {
     button.addEventListener("click", changingChannel);
   });
@@ -82,7 +83,6 @@ function initalizeEventListeners() {
 
 initalizeEventListeners();
 
-
 //**************************
 // FUNCTION
 // BREAK (For my sanity)
@@ -93,7 +93,6 @@ function populateMessages(channel) {
   document.querySelector("#chat-messages").replaceChildren();
 
   // loops through array to bring in messages in chat
-
   const template = document.querySelector("template");
 
   for (let message of chatData[channel]) {
@@ -110,7 +109,6 @@ function populateMessages(channel) {
     document.querySelector("#chat-messages").appendChild(newTemplate); // append to chat messages section
   }
 }
-
 
 //**************************
 // FUNCTION
@@ -142,29 +140,23 @@ function changingChannel(event) {
 
 
 function sendMessage() {
-  let channel = document.querySelector(".channel.active").dataset.channel;
-  let newMessage = document.querySelector("#message-input");
-  let text = newMessage.value.trim();
+  let channel = document.querySelector(".channel.active").dataset.channel; // grabs the active channel to use in finding the correct chatData object
+  let newMessage = document.querySelector("#message-input"); // get entire message element
+  let text = newMessage.value.trim(); // gets text from message elements and trims it
 
+  // push new object to chatData array corresponding to the active channel
   chatData[channel].push({
     sender: "You",
     text: text,
     fromSelf: true,
   });
 
+  // calls populateMessages function so that code doesn't have to be rewritten
   populateMessages(channel);
-  newMessage.value = "";
-  newMessage.focus();
+  newMessage.value = ""; // reset value 
+  newMessage.focus(); // focus back to message text box
 
 }
 
-// take in new event
-
-// add message to appropriate chat array object
-
-// create new message element
-
-// append new message element
-// Make sure both the message window and the `chatData` object are updated.
 
 
